@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa"; // Avatar Icon
-import Logo from "../assets/NePazuru-logo.png";
+import Logo from "../../public/assets/NePazuru-logo.png";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
