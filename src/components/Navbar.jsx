@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { FaUserCircle } from "react-icons/fa"; // Avatar Icon
-import Logo from "../../public/assets/NePazuru-logo.png";
+import { FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -13,9 +12,13 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white bg-[#041625]">
+    <div className="flex flex-row-reverse md:flex-row justify-between items-center h-24 mx-auto px-4 text-white bg-[#041625]">
       {/* Left Section - Logo */}
-      <img src={Logo} alt="NePazuru Logo" className="w-32" />
+      <img
+        src="/assets/Nepazuru-logo.png"
+        alt="NePazuru Logo"
+        className="w-32"
+      />
 
       {/* Desktop Menu (Hidden on mobile) */}
       <ul className="hidden md:flex gap-8">
@@ -45,7 +48,11 @@ const Navbar = () => {
         }`}
       >
         <div className="flex justify-between items-center p-4">
-          <img src={Logo} alt="NePazuru Logo" className="w-32" />
+          <img
+            src="/assets/Nepazuru-logo.png"
+            alt="NePazuru Logo"
+            className="w-32"
+          />
           <button onClick={handleNav} aria-label="Close Menu">
             <AiOutlineClose size={24} />
           </button>
