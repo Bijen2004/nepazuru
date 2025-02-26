@@ -14,8 +14,6 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen  bg-[#1B2028]">
-      <Header />
-
       <main className="max-w-7xl  mx-auto px-4 pt-8 md:pt-12">
         <BrandTitle/>
         <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
@@ -26,7 +24,7 @@ const HomePage = () => {
           </button>
         </div>
 
-        {activeTab === "create" && <UploadZone onFileSelect={setSelectedFile} />}
+        {activeTab === "create" && <UploadZone onFileSelect={setSelectedFile} onNext={''} />}
         {activeTab === "rooms" && <div className="text-center text-white">Rooms feature coming soon...</div>}
       </main>
       <Footer/>
