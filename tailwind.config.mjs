@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        guerrilla: ['Protest Guerrilla', 'cursive'],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
