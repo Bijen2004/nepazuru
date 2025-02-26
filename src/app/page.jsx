@@ -8,8 +8,7 @@ const page = () => {
       <Navbar/>
       <HomePage/>
     </div>
+  );
+};
 
-  )
-}
-
-export default page
+export default page;
