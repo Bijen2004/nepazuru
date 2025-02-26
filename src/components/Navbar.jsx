@@ -6,6 +6,7 @@ import { FaUserCircle, FaGithub } from "react-icons/fa";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import Link from "next/link";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -20,23 +21,30 @@ const Navbar = () => {
   return (
     <nav className="flex flex-row-reverse md:flex-row justify-between items-center h-20 px-6 bg-[#041625] text-white shadow-md">
       {/* Logo */}
+      <Link href={'/'}>
       <img
         src="/assets/Nepazuru-logo.png"
         alt="NePazuru Logo"
         className="w-32 p-2"
       />
+      </Link>
 
       {/* Desktop Menu */}
       <ul className="hidden md:flex gap-10 text-xl">
-        {["Game", "Category", "Leaderboard", "Story", "Gallery"].map((item) => (
-          <li
-            key={item}
-            className="cursor-pointer hover:text-gray-300 transition"
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
+  {["Game", "Category", "Leaderboard", "Story", "Gallery"].map((item) => (
+    <li
+      key={item}
+      className="cursor-pointer hover:text-gray-300 transition"
+    >
+      <Link 
+        href={`/${item.toLowerCase()}`} 
+        className="block"
+      >
+        {item}
+      </Link>
+    </li>
+  ))}
+</ul>
 
       {/* User Icon (Desktop) */}
       <FaUserCircle

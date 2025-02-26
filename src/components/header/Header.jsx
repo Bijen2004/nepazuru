@@ -1,19 +1,20 @@
 import React from "react";
 import Image from "next/image";
 import { User } from "lucide-react";
+import Link from "next/link";
 
 const Header = () => {
   return (
     <header className="p-4 border-b border-gray-800 bg-gray-900">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <div className="flex-shrink-0">
+        <Link href={'/'} className="flex-shrink-0">
           <Image src="/logo.png" alt="Logo" width={110} height={60} className="rounded-full" />
-        </div>
+        </Link>
 
         {/* Centered Navigation */}
         <nav className="flex-grow flex justify-center items-center gap-8">
-          <a href="#" className="text-white hover:text-[#4CD7E7] transition-colors">Game</a>
+          <Link href="/game" className="text-white hover:text-[#4CD7E7] transition-colors">Game</Link>
           <a href="#" className="text-white hover:text-[#4CD7E7] transition-colors">Leaderboard</a>
           <a href="#" className="text-white hover:text-[#4CD7E7] transition-colors">Story</a>
           <a href="#" className="text-white hover:text-[#4CD7E7] transition-colors">Gallery</a>

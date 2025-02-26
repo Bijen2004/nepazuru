@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 
-import Header from "@/components/header/Header";
 import UploadZone from "@/components/upload/UploadZone";
 import Tabs from "@/components/tabs/Tab";
 import Footer from "@/components/footer/Footer";
@@ -14,7 +13,6 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen  bg-[#1B2028]">
-      <Header />
 
       <main className="max-w-7xl  mx-auto px-4 pt-8 md:pt-12">
         <BrandTitle/>
