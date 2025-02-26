@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import CongratulationBox from "@/components/CongratulationBox";
+import ExpandableActionPanel from "@/components/ExpandableActionPanel";
 
 const page = () => {
   return (
@@ -9,6 +10,7 @@ const page = () => {
       <div className="flex flex-col fixed items-center justify-center w-screen h-screen">
         <CongratulationBox />
       </div>
+      <ExpandableActionPanel/>
     </div>
   );
 };
