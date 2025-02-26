@@ -28,7 +28,7 @@ const Navbar = () => {
 
       {/* Desktop Menu */}
       <ul className="hidden md:flex gap-10 text-xl">
-        {["Game", "Category", "Leaderboard", "Story", "Gallery"].map((item) => (
+        {["Game", "Leaderboard", "Gallery"].map((item) => (
           <li
             key={item}
             className="cursor-pointer hover:text-gray-300 transition"
