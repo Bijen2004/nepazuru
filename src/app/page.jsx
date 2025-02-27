@@ -1,17 +1,12 @@
-import Banner from "@/components/banner";
-import Categories from "@/components/categories";
-import PuzzleGallery from "@/components/gallery";
-import Navbar from "@/components/navbar";
-import React from "react";
+import React from 'react'
+import JigsawGallery from './gallery/page'
 
-
-export default function JigsawGallery() {
+const page = () => {
   return (
-    <div className="bg-[#0a192f] min-h-screen text-white">
-     <Navbar></Navbar>
-      <Banner></Banner>
-      <Categories></Categories>
-      <PuzzleGallery></PuzzleGallery>
+    <div>
+      <JigsawGallery/>
     </div>
-  );
+  )
 }
+
+export default page
