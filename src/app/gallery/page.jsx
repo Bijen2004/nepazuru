@@ -6,10 +6,11 @@ import React from 'react'
 const JigsawGallery = () => {
   return (
     <>
+    <div className='bg-[#0a192f] mt-[-30px] pt-10'>
         <Banner/>
         <Categories/>
         <PuzzleGallery/>
-      
+      </div>
     </>
   )
 }
