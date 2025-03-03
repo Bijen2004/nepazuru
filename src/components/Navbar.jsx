@@ -2,10 +2,9 @@
 
 import React, { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { FaUserCircle, FaGithub } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
-import { FaSquareXTwitter } from "react-icons/fa6";
 import Link from "next/link";
 
 const Navbar = () => {
@@ -51,12 +50,6 @@ const Navbar = () => {
           <div className="mt-4 space-y-3">
             <button className="w-full bg-[#072533] text-white flex items-center gap-2 p-2 border rounded">
               <FcGoogle size={20} /> Log in with Google
-            </button>
-            <button className="w-full bg-[#072533] text-white flex items-center gap-2 p-2 border rounded">
-              <FaSquareXTwitter size={20} /> Log in with X (Twitter)
-            </button>
-            <button className="w-full bg-[#072533] text-white flex items-center gap-2 p-2 border rounded">
-              <FaGithub size={20} /> Log in with GitHub
             </button>
 
             <div className="flex items-center my-4">
