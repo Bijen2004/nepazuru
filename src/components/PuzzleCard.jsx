@@ -4,7 +4,7 @@ import Image from "next/image";
 const PuzzleCard = ({ imageUrl }) => {
   return (
     <div className="relative w-fit h-fit bg-gray-900">
-      <div className="border-4 border-[#3C5A68] border-dashed rounded-lg relative w-[400px] h-[300px]">
+      <div className="border-4 border-[#3C5A68] border-dashed rounded-lg relative w-[214px] h-[164px]">
         <Image
           src={imageUrl || "/ground.jpg"}
           alt="Puzzle Card"
