@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Protest Guerrilla';
+    src: url('/fonts/ProtestGuerrilla-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
