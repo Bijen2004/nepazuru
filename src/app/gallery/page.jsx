@@ -1,6 +1,7 @@
 import Banner from '@/components/banner'
 import Categories from '@/components/categories'
 import PuzzleGallery from '@/components/gallery'
+import PuzzleCard from '@/components/PuzzleCard'
 import React from 'react'
 
 const JigsawGallery = () => {
@@ -10,6 +11,7 @@ const JigsawGallery = () => {
         <Banner/>
         <Categories/>
         <PuzzleGallery/>
+        <PuzzleCard/>
       </div>
     </>
   )
