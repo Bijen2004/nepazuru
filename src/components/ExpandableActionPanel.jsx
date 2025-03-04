@@ -20,7 +20,7 @@ const ExpandableActionPanel = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-6 left-6 z-50" ref={panelRef}>
+    <div className="fixed bottom-9 left-12 z-50" ref={panelRef}>
       <div
         className={`relative flex flex-col items-center transition-all duration-300 transform ${
           isOpen ? "translate-y-0 opacity-100 scale-100" : "translate-y-4 opacity-0 scale-90"
@@ -41,7 +41,7 @@ const ExpandableActionPanel = () => {
       {/* Floating Button to toggle the panel */}
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="mt-4 p-3 border-2 border-dashed border-yellow-500 bg-[#3C5A68] text-black rounded-full shadow-lg hover:bg-[#374b54]"
+        className="mt-4 p-4 border-2 border-dashed border-yellow-500 bg-[#3C5A68] text-black rounded-full shadow-lg hover:bg-[#374b54]"
       >
         <FaPuzzlePiece className="text-yellow-500" size={28} />
       </button>
