@@ -22,7 +22,7 @@ const Navbar = () => {
     setShowLogin(false);
   };
 
-  const menuItems = ["Game", "Category", "Leaderboard", "Gallery"];
+  const menuItems = ["Home", "Category", "Leaderboard", "Gallery"];
 
   const renderMenuLinks = () =>
     menuItems.map((item) => (
