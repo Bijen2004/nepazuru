@@ -13,7 +13,7 @@ const HomePage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   return (
-    <div className="min-h-screen  bg-[#1B2028]">
+    <div className="min-h-screen  bg-[#0a192f]">
       <main className="max-w-7xl  mx-auto px-4 pt-8 md:pt-12">
         <BrandTitle/>
         <Tabs activeTab={activeTab} onTabChange={setActiveTab} />

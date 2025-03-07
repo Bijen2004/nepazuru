@@ -6,7 +6,7 @@ import React from 'react'
 const JigsawGallery = () => {
   return (
     <>
-    <div className='bg-[#0a192f]  pt-10'>
+    <div className='bg-[#0a192f]  min-h-screen pt-10'>
         <Banner/>
   
         <PuzzleGallery/>
