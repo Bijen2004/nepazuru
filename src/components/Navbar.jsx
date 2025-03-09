@@ -9,20 +9,36 @@ import Register from "./Register";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
+  const [closing, setClosing] = useState(false); // Track if closing animation is running
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
-  const toggleNav = () => setNav((prev) => !prev);
+  const toggleNav = () => {
+    if (!nav) {
+      setClosing(false);
+      setNav(true);
+    } else {
+      closeNav();
+    }
+  };
+
   const toggleLogin = () => {
     setShowLogin((prev) => !prev);
     setShowRegister(false);
   };
+
   const toggleRegister = () => {
     setShowRegister((prev) => !prev);
     setShowLogin(false);
   };
 
-  const closeNav = () => setNav(false); // Function to close sidebar
+  const closeNav = () => {
+    setClosing(true);
+    setTimeout(() => {
+      setNav(false);
+      setClosing(false);
+    }, 300); // Delay before fully closing
+  };
 
   const menuItems = ["Home", "Category", "Leaderboard", "Gallery"];
 
@@ -54,9 +70,16 @@ const Navbar = () => {
 
       {/* Sidebar with Overlay */}
       {nav && (
-        <div className="fixed inset-0 z-20 bg-black bg-opacity-50" onClick={closeNav}>
+        <div
+          className={`fixed inset-0 z-20 bg-black bg-opacity-50 transition-opacity duration-300 ${
+            closing ? "opacity-0" : "opacity-100"
+          }`}
+          onClick={closeNav}
+        >
           <div
-            className="fixed top-0 left-0 w-3/5 h-full bg-[#041625] border-r border-gray-700 shadow-lg transition-transform translate-x-0"
+            className={`fixed top-0 left-0 w-3/5 h-full bg-[#041625] border-r border-gray-700 shadow-lg transition-transform duration-300 ${
+              closing ? "-translate-x-full" : "translate-x-0"
+            }`}
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
           >
             <div className="flex justify-between items-center p-4 border-b border-gray-700">
