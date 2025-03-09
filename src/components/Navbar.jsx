@@ -22,6 +22,8 @@ const Navbar = () => {
     setShowLogin(false);
   };
 
+  const closeNav = () => setNav(false); // Function to close sidebar
+
   const menuItems = ["Home", "Category", "Leaderboard", "Gallery"];
 
   return (
@@ -50,37 +52,40 @@ const Navbar = () => {
         {nav ? <AiOutlineClose size={24} /> : <AiOutlineMenu size={24} />}
       </button>
 
-      {/* Sidebar Navigation */}
-      <div
-        className={`fixed z-20 top-0 left-0 w-2/5 h-full bg-[#041625] border-r border-gray-700 shadow-lg transition-transform ${
-          nav ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div className="flex justify-between items-center p-4 border-b border-gray-700">
-          <img src="/assets/Nepazuru-logo.png" alt="NePazuru Logo" className="w-32" />
-          <button onClick={toggleNav}>
-            <AiOutlineClose size={24} />
-          </button>
-        </div>
+      {/* Sidebar with Overlay */}
+      {nav && (
+        <div className="fixed inset-0 z-20 bg-black bg-opacity-50" onClick={closeNav}>
+          <div
+            className="fixed top-0 left-0 w-3/5 h-full bg-[#041625] border-r border-gray-700 shadow-lg transition-transform translate-x-0"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+          >
+            <div className="flex justify-between items-center p-4 border-b border-gray-700">
+              <img src="/assets/Nepazuru-logo.png" alt="NePazuru Logo" className="w-32" />
+              <button onClick={closeNav}>
+                <AiOutlineClose size={24} />
+              </button>
+            </div>
 
-        <ul className="text-lg p-4 space-y-4">
-          {menuItems.map((item) => (
-            <li key={item} className="cursor-pointer hover:text-gray-300 transition">
-              <Link href={`/${item.toLowerCase()}`} onClick={toggleNav}>
-                {item}
-              </Link>
-            </li>
-          ))}
-        </ul>
+            <ul className="text-lg p-4 space-y-4">
+              {menuItems.map((item) => (
+                <li key={item} className="cursor-pointer hover:text-gray-300 transition">
+                  <Link href={`/${item.toLowerCase()}`} onClick={closeNav}>
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
 
-        {/* Avatar - Centered */}
-        <div className="flex justify-center border-t border-gray-700 mt-4 p-4">
-          <FaUserCircle
-            className="text-white text-4xl cursor-pointer hover:text-gray-300 transition"
-            onClick={toggleLogin}
-          />
+            {/* Avatar - Centered */}
+            <div className="flex justify-center border-t border-gray-700 mt-4 p-4">
+              <FaUserCircle
+                className="text-white text-4xl cursor-pointer hover:text-gray-300 transition"
+                onClick={toggleLogin}
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 };
