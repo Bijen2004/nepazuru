@@ -38,7 +38,7 @@ const Login = ({ onClose, onShowRegister }) => {
             className="w-full p-2 bg-[#072533] border rounded"
             placeholder="Password"
           />
-          <button type="button" className="absolute right-3 top-9 text-gray-500" onClick={togglePassword}>
+          <button type="button" className="absolute right-3 top-[38px] text-gray-500" onClick={togglePassword}>
             {showPassword ? <IoEyeOffOutline size={20} /> : <IoEyeOutline size={20} />}
           </button>
         </div>
