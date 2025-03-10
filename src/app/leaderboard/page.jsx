@@ -11,7 +11,7 @@ export default function Leaderboard() {
 
     return (
         <>
-        <div className="bg-[#0a192f]">
+        <div className="bg-[#0a192f] w-screen h-screen">
             {/* Background Image  */}
             <div className="relative h-48 bg-gradient-to-r from-[#40E0D0]/20 to-[#40E0D0]/10 overflow-hidden">
                 <div className="absolute inset-0">
