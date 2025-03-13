@@ -10,6 +10,7 @@ export default function Playground() {
   const [imageUrl, setImageUrl] = useState(null);
   const [puzzlePieces, setPuzzlePieces] = useState(3);
   const [showPreview, setShowPreview] = useState(false);
+  const [bgColor, setBgColor] = useState("#1B2028");
 
   useEffect(() => {
     const storedImage = localStorage.getItem("selectedImage");
@@ -36,13 +37,16 @@ export default function Playground() {
         {/* Puzzle & Preview Container */}
         <div className="flex justify-between items-start gap-5 flex-wrap md:flex-nowrap">
           <div className="relative">
-            <div className="bg-white/10 rounded-lg shadow-lg p-4">
+            <div
+              className="bg-white/10 rounded-lg shadow-lg p-4"
+              style={{ backgroundColor: bgColor }}
+            >
               <h2 className="text-xl text-white font-semibold mb-4 text-center">
                 Solve the Puzzle
               </h2>
               {imageUrl && (
                 <>
-                  <div className="w-[500px] h-[500px]">
+                  <div className="w-[500px] h-[500px] aspect-square relative">
                     <JigsawPuzzle
                       imageSrc={imageUrl}
                       rows={puzzlePieces}
@@ -54,6 +58,7 @@ export default function Playground() {
                     <ExpandableActionPanel
                       showPreview={showPreview}
                       setShowPreview={setShowPreview}
+                      setBgColor={setBgColor}
                     />
                   </div>
                 </>

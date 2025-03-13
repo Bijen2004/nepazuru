@@ -5,7 +5,7 @@ import { FiEye, FiEyeOff, FiArrowLeftCircle } from "react-icons/fi";
 import { FaPuzzlePiece } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 
-const ExpandableActionPanel = ({ showPreview, setShowPreview }) => {
+const ExpandableActionPanel = ({ showPreview, setShowPreview, setBgColor }) => {
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef(null);
   const router = useRouter();
@@ -36,6 +36,13 @@ const ExpandableActionPanel = ({ showPreview, setShowPreview }) => {
         >
           {showPreview ? <FiEyeOff size={24} /> : <FiEye size={24} />}
         </button>
+
+        <input
+          type="color"
+          className="mt-2 w-10 h-10 cursor-pointer bg-black border border-gray-700 rounded-full"
+          onChange={(e) => setBgColor(e.target.value)}
+        />
+
         <button
           className="p-2 bg-black text-white rounded-full hover:bg-gray-800 mt-2"
           onClick={() => router.push("/home")}
