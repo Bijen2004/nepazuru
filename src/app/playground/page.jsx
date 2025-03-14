@@ -10,7 +10,7 @@ export default function Playground() {
   const [imageUrl, setImageUrl] = useState(null);
   const [puzzlePieces, setPuzzlePieces] = useState(3);
   const [showPreview, setShowPreview] = useState(false);
-  const [bgColor, setBgColor] = useState("#1B2028");
+  const [bgColor, setBgColor] = useState("#3C5A68");
 
   useEffect(() => {
     const storedImage = localStorage.getItem("selectedImage");
