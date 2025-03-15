@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 export default function History() {
   const [activeTab, setActiveTab] = useState("all time");
   const [historyData, setHistoryData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userLoggedIn, setUserLoggedIn] = useState(false); // Default: assume user is NOT logged in
   const router = useRouter();
@@ -27,7 +28,9 @@ export default function History() {
     const fetchHistory = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/puzzle/completion/${userId}`);
+        console.log(response.data);
         setHistoryData(response.data || []);
+        setFilteredData(response.data || []);
       } catch (error) {
         console.error("Error fetching puzzle history:", error);
       } finally {
@@ -37,6 +40,62 @@ export default function History() {
 
     fetchHistory();
   }, []);
+
+  const getImageSrc = (base64String) => {
+    if (!base64String) return "/Logo.png"; // Default image
+    if (base64String.startsWith("data:image/")) return base64String;
+    return "/Logo.png";
+  };
+  
+  
+
+  // Filter data when active tab changes
+  useEffect(() => {
+    filterDataByTimeRange(activeTab);
+  }, [activeTab, historyData]);
+
+  const filterDataByTimeRange = (timeRange) => {
+    if (!historyData.length) {
+      setFilteredData([]);
+      return;
+    }
+
+    const now = new Date();
+    let startDate = new Date();
+
+    switch (timeRange) {
+      case "today":
+        startDate.setHours(0, 0, 0, 0); // Start of today
+        break;
+      case "this week":
+        // Get start of this week (Sunday)
+        const day = now.getDay(); // 0 for Sunday, 1 for Monday, etc.
+        startDate.setDate(now.getDate() - day);
+        startDate.setHours(0, 0, 0, 0);
+        break;
+      case "this month":
+        startDate.setDate(1); // Start of the current month
+        startDate.setHours(0, 0, 0, 0);
+        break;
+      case "this year":
+        startDate = new Date(now.getFullYear(), 0, 1); // January 1st of current year
+        break;
+      default: // "all time"
+        setFilteredData(historyData);
+        return;
+    }
+
+    const filtered = historyData.filter(item => {
+      const completedDate = new Date(item.completedAt);
+      return completedDate >= startDate && completedDate <= now;
+    });
+
+    setFilteredData(filtered);
+  };
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
 
   if (loading) {
     return (
@@ -75,14 +134,16 @@ export default function History() {
 
       {/* Tab Navigation */}
       <div className="w-full flex items-center justify-between h-[80px] bg-[#041625] text-white px-4">
-        <p className="text-xl">Total: {historyData.length}</p>
-        <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
+        <p className="text-xl">
+          Showing: {filteredData.length} {activeTab !== "all time" ? `(${activeTab})` : ""}
+        </p>
+        <Tabs activeTab={activeTab} onTabChange={handleTabChange} />
       </div>
 
       {/* Puzzle History Table */}
-      {historyData.length === 0 ? (
+      {filteredData.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-96 text-white">
-          <p className="text-lg">No puzzle history found.</p>
+          <p className="text-lg">No puzzle history found for {activeTab}.</p>
         </div>
       ) : (
         <div className="overflow-x-auto">
@@ -97,13 +158,18 @@ export default function History() {
               </tr>
             </thead>
             <tbody>
-              {historyData.map((game, index) => (
+              {filteredData.map((game, index) => (
                 <tr key={index} className="bg-gray-300 even:bg-gray-200 rounded-lg overflow-hidden">
                   <td className="py-4 px-6 flex items-center gap-10">
                     <div className="w-7 h-7 rounded-full flex items-center bg-[#2E3A44] text-white justify-center font-bold border border-gray-700 shadow-md">
                       {index + 1}
                     </div>
-                    <img src={game.selectedImage || "/Logo.png"} alt="puzzle" className="w-10 h-10 object-cover" />
+                    <img 
+  src={getImageSrc(game.selectedImage)} 
+  alt="puzzle" 
+  className="w-10 h-10 object-cover"
+/>
+
                   </td>
                   <td className="py-4 px-6 text-center text-black">{game.mode || "Normal"}</td>
                   <td className="py-4 px-6 text-center text-black">{game.puzzlePiece}</td>
