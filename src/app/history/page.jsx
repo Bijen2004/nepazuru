@@ -61,20 +61,22 @@ export default function History() {
             <p className="text-xl">Score</p>
           </div> */}
           <div className="flex w-fit gap-2">
-            <button className="w-[30px] h-[30px] bg-[#2E3A44] rounded-sm">
+            <button className="w-[30px] h-[30px] bg-[#2E3A44] rounded-sm hover:bg-[#40E0D0] active:bg-[#28a8a0] transition">
               {"<"}
             </button>
-            <button className="w-[30px] h-[30px] bg-[#2E3A44] rounded-sm">
+            <button className="w-[30px] h-[30px] bg-[#2E3A44] rounded-sm hover:bg-[#40E0D0] active:bg-[#28a8a0] transition">
               1
             </button>
-            <button className="w-[30px] h-[30px] bg-[#2E3A44] rounded-sm">
+            <button className="w-[30px] h-[30px] bg-[#2E3A44] rounded-sm hover:bg-[#40E0D0] active:bg-[#28a8a0] transition">
               2
             </button>
-            <button className="w-[30px] h-[30px] bg-[#2E3A44] rounded-sm">
+            <button className="w-[30px] h-[30px] bg-[#2E3A44] rounded-sm hover:bg-[#40E0D0] active:bg-[#28a8a0] transition">
               3
             </button>
-            <button className="w-[30px] h-[30px] rounded-sm">...</button>
-            <button className="w-[30px] h-[30px] bg-[#2E3A44] rounded-sm">
+            <button className="w-[30px] h-[30px] rounded-sm hover:bg-[#40E0D0] active:bg-[#28a8a0] transition">
+              ...
+            </button>
+            <button className="w-[30px] h-[30px] bg-[#2E3A44] rounded-sm hover:bg-[#40E0D0] active:bg-[#28a8a0] transition">
               {">"}
             </button>
           </div>
@@ -99,12 +101,16 @@ export default function History() {
                   className="bg-gray-300 even:bg-gray-200 rounded-lg overflow-hidden"
                 >
                   <td className="py-4 px-6">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-10">
                       <div className="w-7 h-7 rounded-full flex items-center bg-[#2E3A44] text-white justify-center font-bold border border-gray-700 shadow-md">
                         {game.number}
                       </div>
                       <div className="text-black">
-                        <img src={`${game.game}`} alt="puzzle" />
+                        <img
+                          src={`${game.game}`}
+                          alt="puzzle"
+                          className="w-10 h-10 object-cover"
+                        />
                       </div>
                     </div>
                   </td>
