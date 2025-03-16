@@ -55,14 +55,14 @@ export default function PuzzleCustomizerPage() {
                   <GameController className="h-4 w-4" />
                   Normal
                 </button>
-                <button
+                {/* <button
                   onClick={() => setMode("Hardcore")}
                   className={`p-2 rounded-lg ${
                     mode === "Hardcore" ? "bg-[#40E0D0] text-black" : "text-gray-400 border-2 border-gray-400"
                   }`}
                 >
                   Hardcore
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
@@ -91,7 +91,7 @@ export default function PuzzleCustomizerPage() {
             </div>
           </div>
 
-          <div className="flex justify-between items-center text-gray-400">
+          {/* <div className="flex justify-between items-center text-gray-400">
             <span>PREVIEW :</span>
             <div className="flex items-center gap-2">
               <input
@@ -103,7 +103,7 @@ export default function PuzzleCustomizerPage() {
               />
               <label htmlFor="preview">Show preview</label>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex justify-center mt-6">
