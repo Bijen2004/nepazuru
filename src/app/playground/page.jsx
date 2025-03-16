@@ -159,31 +159,27 @@ export default function Playground() {
       <div className="fixed top-20 right-4 bg-white/30 rounded-lg px-4 py-2 text-white text-xl font-bold shadow-lg z-50">
         Time: {elapsedTime}s
       </div>
-      <div className="fixed top-32 right-4 bg-white/30 rounded-lg px-4 py-2 text-white text-xl font-bold shadow-lg z-50">
-        Score: {puzzleCompleted ? score : '—'}
-      </div>
+
 
       <div className="max-w-6xl mx-auto flex flex-col items-center relative">
         {/* Puzzle & Preview Container */}
         <div className="flex justify-between items-start gap-5 flex-wrap md:flex-nowrap">
           <div className="relative">
-            <div
-              className="bg-white/10 rounded-lg shadow-lg p-4"
-              style={{ backgroundColor: bgColor }}
-            >
-              <h2 className="text-xl text-white font-semibold mb-4 text-center">
-                Solve the Puzzle
-              </h2>
-              {imageUrl && (
-                <>
-                  <div className="w-[500px] h-[500px] aspect-square relative">
-                    <JigsawPuzzle
-                      imageSrc={imageUrl}
-                      rows={puzzlePieces}
-                      columns={puzzlePieces}
-                      onSolved={handlePuzzleComplete}
-                    />
-                  </div>
+          <div className="bg-white/10 rounded-lg shadow-lg p-4" style={{backgroundColor: bgColor}}>
+            <h2 className="text-xl text-white font-semibold text-center">
+              Solve the Puzzle
+            </h2>
+
+            {imageUrl && (
+              <>
+                <div className="w-[500px] h-auto py-[20px] relative">
+                  <JigsawPuzzle
+                    imageSrc={imageUrl}
+                    rows={puzzlePieces}
+                    columns={puzzlePieces}
+                    onSolved={handlePuzzleComplete}
+                  />
+                </div>
                   <div>
                     <ExpandableActionPanel
                       showPreview={showPreview}
