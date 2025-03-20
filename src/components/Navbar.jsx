@@ -18,6 +18,13 @@ const Navbar = () => {
   const [closing, setClosing] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // useEffect(() => {
+  //   // Fetch authentication state (Example: localStorage, API, or Auth provider)
+  //   const user = localStorage.getItem("user"); // Replace with your actual authentication logic
+  //   setIsAuthenticated(!!user);
+  // }, []);
 
   const toggleNav = () => {
     if (!nav) {
