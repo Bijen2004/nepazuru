@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import {
   FaUserCircle,
@@ -26,6 +26,59 @@ const Navbar = () => {
   //   setIsAuthenticated(!!user);
   // }, []);
 
+  // useEffect(() => {
+  //   const token = localStorage.getItem("nepazuru-token");
+  //   if(token){
+  //     setIsAuthenticated(true)
+  //   }
+  //   // You can also add this to track login state changes
+  //   const handleStorageChange = () => {
+  //     const token = localStorage.getItem("nepazuru-token");
+  //     setIsAuthenticated(!!token);
+  //   };
+    
+  //   // Listen for storage changes (in case token is added/removed in another tab)
+  //   window.addEventListener('storage', handleStorageChange);
+    
+  //   // Cleanup listener on component unmount
+  //   return () => {
+  //     window.removeEventListener('storage', handleStorageChange);
+  //   };
+  // }, []); // Empty dependency array means this runs once on component mount
+
+  // In Navbar.js
+useEffect(() => {
+  // Check token on mount
+  const token = localStorage.getItem("nepazuru-token");
+  setIsAuthenticated(!!token);
+  
+  // Function to update auth state
+  const updateAuthState = () => {
+    const token = localStorage.getItem("nepazuru-token");
+    setIsAuthenticated(!!token);
+  };
+  
+  // Listen for our custom event (same tab changes)
+  window.addEventListener('loginStateChange', updateAuthState);
+  
+  // Listen for storage changes (other tab changes)
+  window.addEventListener('storage', updateAuthState);
+  
+  // Cleanup listeners
+  return () => {
+    window.removeEventListener('loginStateChange', updateAuthState);
+    window.removeEventListener('storage', updateAuthState);
+  };
+}, []);
+
+// Add logout function
+const handleLogout = () => {
+  localStorage.removeItem("nepazuru-token");
+  setIsAuthenticated(false);
+  // Optionally redirect to home or login page
+  // router.push('/home');
+};
+
   const toggleNav = () => {
     if (!nav) {
       setClosing(false);
@@ -36,9 +89,13 @@ const Navbar = () => {
   };
 
   const toggleLogin = (e) => {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
     setShowLogin((prev) => !prev);
     setShowRegister(false);
+  };
+  
+  const closeLogin = () => {
+    setShowLogin(false);
   };
 
   const toggleRegister = (e) => {
@@ -85,10 +142,35 @@ const Navbar = () => {
       </ul>
 
       {/* Desktop Avatar */}
+      {/* {isAuthenticated ? 
+      <div>
+        Logged in
+      </div>:
       <FaUserCircle
         className="hidden md:block text-3xl cursor-pointer"
         onClick={toggleLogin}
-      />
+      />} */}
+
+      {/* Desktop Avatar/Login Section */}
+{isAuthenticated ? (
+  <div className="flex items-center gap-2">
+    <FaUserCircle className="hidden md:block text-3xl" />
+    <div className="hidden md:flex flex-col">
+      <p className="text-sm font-medium">User</p>
+      <button 
+        onClick={handleLogout} 
+        className="text-xs text-red-400 hover:text-red-300"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+) : (
+  <FaUserCircle
+    className="hidden md:block text-3xl cursor-pointer"
+    onClick={toggleLogin}
+  />
+)}
 
       {/* Login & Register Modal */}
       {showLogin && (
@@ -100,7 +182,7 @@ const Navbar = () => {
             className="p-6 rounded-lg text-white"
             onClick={(e) => e.stopPropagation()}
           >
-            <Login onClose={toggleLogin} onShowRegister={toggleRegister} />
+            <Login onClose={closeLogin} onShowRegister={toggleRegister} />
           </div>
         </div>
       )}
@@ -166,7 +248,33 @@ const Navbar = () => {
             </ul>
 
             {/* Sidebar Avatar */}
-            <div
+<div
+  className="absolute bottom-4 left-4 flex items-center space-x-3 p-4 rounded-lg bg-gray-800 w-11/12 cursor-pointer"
+  onClick={isAuthenticated ? undefined : toggleLogin}
+>
+  <FaUserCircle className="w-10 h-10 rounded-full border border-gray-600" />
+  <div className="flex-1">
+    {isAuthenticated ? (
+      <>
+        <p className="font-semibold">User</p>
+        <button 
+          onClick={handleLogout}
+          className="text-sm text-red-400 hover:text-red-300"
+        >
+          Logout
+        </button>
+      </>
+    ) : (
+      <>
+        <p className="font-semibold">Guest</p>
+        <p className="text-sm text-gray-400">@anonymous123</p>
+      </>
+    )}
+  </div>
+</div>
+
+            {/* Sidebar Avatar */}
+            {/* <div
               className="absolute bottom-4 left-4 flex items-center space-x-3 p-4 rounded-lg bg-gray-800 w-11/12 cursor-pointer"
               onClick={toggleLogin}
             >
@@ -175,7 +283,7 @@ const Navbar = () => {
                 <p className="font-semibold">Guest</p>
                 <p className="text-sm text-gray-400">@anonymous123</p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       )}
