@@ -52,7 +52,10 @@ export default function History() {
         <p className="text-2xl font-bold mb-4">Please log in to view your puzzle history.</p>
         <button
           className="mt-4 px-6 py-3 bg-[#40E0D0] text-black font-semibold rounded-lg hover:bg-[#30c4b2] transition"
-          onClick={() => router.push("/login")}
+          onClick={() => {
+            const loginEvent = new Event("openLogin");
+            window.dispatchEvent(loginEvent);
+          }}
         >
           Go to Login
         </button>
