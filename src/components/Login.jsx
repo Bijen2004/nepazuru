@@ -28,6 +28,7 @@ const handleSubmit = async (e) => {
     
     if (response.data) {
       localStorage.setItem('nepazuru-token', response.data.token);
+      localStorage.setItem('user_id',response.data.user._id)
       
       // Dispatch a custom event when login is successful
       window.dispatchEvent(new Event('loginStateChange'));
