@@ -97,7 +97,7 @@ const Navbar = () => {
           onClick={toggleLogin}
         >
           <div
-            className="bg-[#041625] p-6 rounded-lg text-white"
+            className="p-6 rounded-lg text-white"
             onClick={(e) => e.stopPropagation()}
           >
             <Login onClose={toggleLogin} onShowRegister={toggleRegister} />
