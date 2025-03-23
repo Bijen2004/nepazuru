@@ -13,6 +13,7 @@ export default function Playground() {
   const [puzzlePieces, setPuzzlePieces] = useState(3);
   const [startTime, setStartTime] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [score, setScore] = useState(0);
   const timerInterval = useRef(null);
   const hasHandledCompletion = useRef(false);
 
@@ -23,8 +24,10 @@ export default function Playground() {
     
     if (storedImage) setImageUrl(storedImage);
     if (storedPieces) {
-      const actualPiece = parseInt(storedPieces, 10) / 3;
-      setPuzzlePieces(actualPiece > 0 ? actualPiece : 3);
+      // Calculate the square root of the total pieces (9→3, 16→4, 25→5)
+      const totalPieces = parseInt(storedPieces, 10);
+      const dimension = Math.sqrt(totalPieces);
+      setPuzzlePieces(dimension);
     }
 
     // Set up timer
@@ -40,6 +43,31 @@ export default function Playground() {
     };
   }, []);
 
+  // Calculate a simple score based on puzzle pieces and completion time
+  const calculateScore = () => {
+    // Total number of pieces (puzzlePieces squared)
+    const totalPieces = puzzlePieces * puzzlePieces;
+    
+    // Base score from difficulty (number of pieces)
+    // More pieces = higher base score (3x3=9 → 30, 4x4=16 → 40, 5x5=25 → 50)
+    const baseScore = totalPieces * 10 / 3;
+    
+    // Time factor: decreases as time increases
+    // For every 10 seconds, lose 1 point, with a minimum of 10 points
+    const timeDeduction = Math.floor(elapsedTime / 10);
+    const timeFactor = Math.max(baseScore - timeDeduction, 10);
+    
+    // Add bonus for very quick completions
+    let bonusPoints = 0;
+    const expectedTime = totalPieces * 3; // 3 seconds per piece is considered fast
+    if (elapsedTime < expectedTime) {
+      bonusPoints = 10; // Bonus for very fast completion
+    }
+    
+    // Final score (will typically be between 10-100)
+    return Math.min(Math.floor(timeFactor + bonusPoints), 99);
+  };
+
   // Handle puzzle completion
   const handlePuzzleComplete = () => {
     console.log("Puzzle completed!");
@@ -48,6 +76,10 @@ export default function Playground() {
     setTimeout(() => {
       setPuzzleCompleted(true);
       clearInterval(timerInterval.current);
+      
+      // Calculate and set score
+      const calculatedScore = calculateScore();
+      setScore(calculatedScore);
     }, 0);
   };
 
@@ -77,7 +109,8 @@ export default function Playground() {
       userId,
       timer: elapsedTime,
       selectedImage,
-      puzzlePiece
+      puzzlePiece, // This will be the total pieces (9, 16, or 25)
+      score: score // Add score to the data being sent
     };
     sendCompletionData(data);
   };
@@ -124,6 +157,9 @@ export default function Playground() {
       <div className="fixed top-20 right-4 bg-white/30 rounded-lg px-4 py-2 text-white text-xl font-bold shadow-lg z-50">
         Time: {elapsedTime}s
       </div>
+      <div className="fixed top-32 right-4 bg-white/30 rounded-lg px-4 py-2 text-white text-xl font-bold shadow-lg z-50">
+        Score: {puzzleCompleted ? score : '—'}
+      </div>
 
       <div className="max-w-6xl mx-auto flex flex-col items-center relative">
         <div className="relative">
@@ -134,7 +170,7 @@ export default function Playground() {
 
             {imageUrl && (
               <>
-                <div className="w-[500px] h-[500px] aspect-square relative">
+                <div className="w-[500px] h-auto py-[20px] relative">
                   <JigsawPuzzle
                     imageSrc={imageUrl}
                     rows={puzzlePieces}
@@ -150,7 +186,7 @@ export default function Playground() {
 
         {showCongrats && (
           <div className="absolute inset-0 flex justify-center items-center bg-black/60">
-            <CongratulationBox timeElapsed={elapsedTime} />
+            <CongratulationBox timeElapsed={elapsedTime} score={score} />
           </div>
         )}
       </div>

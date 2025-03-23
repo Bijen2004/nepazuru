@@ -10,14 +10,6 @@ const Tabs = ({ activeTab, onTabChange }) => (
     >
       Create
     </button>
-    <button 
-      onClick={() => onTabChange('rooms')}
-      className={`text-white pb-2 transition-all ${
-        activeTab === 'rooms' ? 'border-b-2 border-[#4CD7E7]' : ''
-      }`}
-    >
-      Rooms
-    </button>
   </div>
 );
 

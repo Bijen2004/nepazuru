@@ -25,7 +25,6 @@ const HomePage = () => {
         </div>
 
         {activeTab === "create" && <UploadZone onFileSelect={setSelectedFile} />}
-        {activeTab === "rooms" && <div className="text-center text-white">Rooms feature coming soon...</div>}
       </main>
     </div>
   );

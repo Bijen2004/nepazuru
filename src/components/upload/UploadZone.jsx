@@ -77,7 +77,7 @@ const UploadZone = ({ onFileSelect }) => {
        {preview && (
           <button 
             onClick={handlePlayNow}
-            className="bg-[#46B789]  text-white px-6 py-3 rounded-lg inline-flex items-center hover:bg-opacity-90 transition-colors mt-4"
+            className="bg-[#46B789] flex  text-white px-6 py-3 rounded-lg  hover:bg-opacity-90 transition-colors mt-4"
           >
             Play Now
           </button>
