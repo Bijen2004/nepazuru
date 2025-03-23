@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Leaf, PawPrint, Star, Palette } from "lucide-react";
+import { Leaf, PawPrint, Palette } from "lucide-react";
 
 export default function Categories({ selected, onSelect }) {
   const categories = [
@@ -9,7 +9,7 @@ export default function Categories({ selected, onSelect }) {
     { name: "Nature", icon: <Leaf size={16} className="text-green-500" /> },
     { name: "Animals", icon: <PawPrint size={16} className="text-red-500" /> },
     { name: "Art", icon: <Palette size={16} className="text-yellow-500" /> },
-    { name: "Anime", icon: <Star size={16} className="text-orange-500" /> },
+    // { name: "Anime", icon: <Star size={16} className="text-orange-500" /> },
   ];
 
   return (
