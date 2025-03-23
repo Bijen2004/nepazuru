@@ -3,14 +3,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Tabs from "@/components/tabs/HistoryTab";
-import { useRouter } from "next/navigation";
 
 export default function History() {
   const [activeTab, setActiveTab] = useState("all time");
   const [historyData, setHistoryData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [userLoggedIn, setUserLoggedIn] = useState(false); // Default: assume user is NOT logged in
-  const router = useRouter();
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const userId = localStorage.getItem("user_id");
@@ -23,25 +23,28 @@ export default function History() {
     }
 
     setUserLoggedIn(true);
-    
-    const fetchHistory = async () => {
-      try {
-        const response = await axios.get(`http://localhost:4000/puzzle/completion/${userId}`);
-        setHistoryData(response.data || []);
-      } catch (error) {
-        console.error("Error fetching puzzle history:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchHistory(userId, currentPage);
+  }, [currentPage]);
 
-    fetchHistory();
-  }, []);
+  const fetchHistory = async (userId, page) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/puzzle/history/${userId}?page=${page}&limit=5`
+      );
+      setHistoryData(response.data.completions || []);
+      setTotalPages(response.data.totalPages || 1);
+    } catch (error) {
+      console.error("Error fetching puzzle history:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center bg-[#0a192f] text-white">
-        <p>Loading...</p>
+        <p className="text-lg animate-pulse">Loading history...</p>
       </div>
     );
   }
@@ -49,7 +52,9 @@ export default function History() {
   if (!userLoggedIn) {
     return (
       <div className="h-screen flex flex-col items-center justify-center bg-[#0a192f] text-white text-center">
-        <p className="text-2xl font-bold mb-4">Please log in to view your puzzle history.</p>
+        <p className="text-2xl font-bold mb-4">
+          Please log in to view your puzzle history.
+        </p>
         <button
           className="mt-4 px-6 py-3 bg-[#40E0D0] text-black font-semibold rounded-lg hover:bg-[#30c4b2] transition"
           onClick={() => {
@@ -90,29 +95,77 @@ export default function History() {
             <thead>
               <tr className="bg-[#001a25] text-white">
                 <th className="py-4 px-6 text-left w-1/5">Puzzle</th>
-                <th className="py-4 px-6 text-center w-1/5">Mode</th>
                 <th className="py-4 px-6 text-center w-1/5">Pieces</th>
-                <th className="py-4 px-6 text-center w-1/5">Time</th>
+                <th className="py-4 px-6 text-center w-1/5">Time (s)</th>
                 <th className="py-4 px-6 text-center w-1/5">Score</th>
+                <th className="py-4 px-6 text-center w-1/5">Date</th>
               </tr>
             </thead>
             <tbody>
               {historyData.map((game, index) => (
-                <tr key={index} className="bg-gray-300 even:bg-gray-200 rounded-lg overflow-hidden">
+                <tr
+                  key={index}
+                  className="bg-gray-300 even:bg-gray-200 hover:bg-gray-400 transition"
+                >
                   <td className="py-4 px-6 flex items-center gap-10">
                     <div className="w-7 h-7 rounded-full flex items-center bg-[#2E3A44] text-white justify-center font-bold border border-gray-700 shadow-md">
                       {index + 1}
                     </div>
-                    <img src={game.selectedImage || "/Logo.png"} alt="puzzle" className="w-10 h-10 object-cover" />
+                    <img
+                      src={game.selectedImage || "/Logo.png"}
+                      alt="puzzle"
+                      className="w-10 h-10 object-cover rounded-md"
+                    />
                   </td>
-                  <td className="py-4 px-6 text-center text-black">{game.mode || "Normal"}</td>
-                  <td className="py-4 px-6 text-center text-black">{game.puzzlePiece}</td>
-                  <td className="py-4 px-6 text-center text-black">{game.timer}</td>
-                  <td className="py-4 px-6 text-center text-black">{(game.score || 0).toLocaleString()}</td>
+                  <td className="py-4 px-6 text-center text-black">
+                    {game.puzzlePiece}
+                  </td>
+                  <td className="py-4 px-6 text-center text-black">
+                    {game.timer}s
+                  </td>
+                  <td className="py-4 px-6 text-center text-black">
+                    {(game.score || 0).toLocaleString()}
+                  </td>
+                  <td className="py-4 px-6 text-center text-black">
+                    {new Date(game.completedAt).toLocaleDateString()}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-4">
+          <button
+            className={`px-4 py-2 mx-2 rounded-lg ${
+              currentPage === 1
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-[#40E0D0] hover:bg-[#30c4b2]"
+            }`}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Prev
+          </button>
+          <span className="text-white px-4">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            className={`px-4 py-2 mx-2 rounded-lg ${
+              currentPage === totalPages
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-[#40E0D0] hover:bg-[#30c4b2]"
+            }`}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
         </div>
       )}
     </div>
