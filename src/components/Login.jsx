@@ -85,7 +85,7 @@ const Login = ({ onClose, onShowRegister }) => {
             placeholder="Password"
             required
           />
-          <button type="button" className="text-gray-500 absolute right-3 top-9" onClick={togglePassword}>
+          <button type="button" className="text-gray-500 absolute right-3 top-[38px]" onClick={togglePassword}>
             {showPassword ? <IoEyeOffOutline size={20} /> : <IoEyeOutline size={20} />}
           </button>
         </div>

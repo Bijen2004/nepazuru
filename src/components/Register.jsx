@@ -28,7 +28,7 @@ const Register = ({ onClose, onShowLogin }) => {
       onClose();
     } catch (error) {
       console.error("Error:", error.response?.data || error.message);
-      alert("Registration failed. Please try again.");
+      // alert("Registration failed. Please try again.");
     }
     setLoading(false);
   };
@@ -77,7 +77,7 @@ const Register = ({ onClose, onShowLogin }) => {
             placeholder="Password"
             required
           />
-          <button type="button" className="absolute right-3 top-9 text-gray-500" onClick={togglePassword}>
+          <button type="button" className="absolute right-3 top-[38px] text-gray-500" onClick={togglePassword}>
             {showPassword ? <IoEyeOffOutline size={20} /> : <IoEyeOutline size={20} />}
           </button>
         </div>
