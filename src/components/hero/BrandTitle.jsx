@@ -7,10 +7,11 @@ const BrandTitle = () => (
       {/* Ensure the image scales properly */}
       <div className="relative w-24 h-24 md:w-32 md:h-32">
         <Image
-          src="/Logo.png" // Ensure this image exists in the public folder
+          src="/Logo.png"
           alt="Logo"
-          layout="fill" // Allows the image to fully occupy the div
-          objectFit="contain" // Ensures the whole image is visible
+          fill // Use "fill" instead of "layout='fill'"
+          sizes="(max-width: 768px) 96px, 128px" // Adjust sizes for responsiveness
+          style={{ objectFit: "contain" }} // Use "style" instead of "objectFit"
           className="rounded-lg"
         />
       </div>
