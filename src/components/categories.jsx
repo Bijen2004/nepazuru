@@ -26,7 +26,7 @@ export default function Categories() {
           {categories.map((category) => (
             <div
               key={category.name}
-              className="flex items-center gap-1 bg-gray-800 px-3 py-1 rounded-md text-sm text-white shadow-md hover:bg-gray-700 transition"
+              className="flex items-center gap-1 bg-gray-800 px-3 py-1 rounded-md text-sm text-white shadow-md hover:bg-gray-700 transition cursor-pointer"
             >
               {category.icon}
               {category.name}
