@@ -1,7 +1,18 @@
+'use client';
+
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const PuzzleCard = ({ imageUrl }) => {
+  const router = useRouter();
+
+  const handlePlayClick = () => {
+    localStorage.setItem("selectedImage", imageUrl);
+    
+    router.push("/customize");
+  };
+
   return (
     <div className="relative w-fit h-fit bg-gray-900 cursor-pointer group transition-transform duration-300 transform hover:scale-105 hover:shadow-2xl rounded-lg">
       <div className="border-4 border-[#3C5A68] border-dashed rounded-lg relative w-[214px] h-[164px] overflow-hidden">
@@ -13,7 +24,7 @@ const PuzzleCard = ({ imageUrl }) => {
           className="rounded-md object-fill w-full h-full"
         />
 
-        {/* Frame Overlay */}
+       
         <div
           className="absolute inset-0 pointer-events-none z-10"
           style={{
@@ -24,9 +35,12 @@ const PuzzleCard = ({ imageUrl }) => {
           }}
         />
 
-        {/* Hover Overlay + Button */}
+       
         <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30 flex items-center justify-center">
-          <button className="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded-md shadow-md transition-all duration-300">
+          <button
+            onClick={handlePlayClick}
+            className="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded-md shadow-md transition-all duration-300"
+          >
             Play Now
           </button>
         </div>
