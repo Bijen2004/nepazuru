@@ -18,8 +18,6 @@ export default function Playground() {
   const hasHandledCompletion = useRef(false);
   const [showPreview, setShowPreview] = useState(false);
   const [bgColor, setBgColor] = useState("#3C5A68");
-  const [showPreview, setShowPreview] = useState(false);
-  const [bgColor, setBgColor] = useState("#3C5A68");
 
   // Load initial data from localStorage
   useEffect(() => {
