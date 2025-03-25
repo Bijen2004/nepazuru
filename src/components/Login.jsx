@@ -5,6 +5,8 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { signInWithPopup} from "firebase/auth";
+import { auth, googleProvider} from "@/app/firebase"
 
 const Login = ({ onClose, onShowRegister }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -43,6 +45,28 @@ const handleSubmit = async (e) => {
   }
   setLoading(false);
 };
+
+const handleGoogleSignIn = async () => {
+  try{
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+
+    console.log("User signed in:", user);
+
+    localStorage.setItem("nepazuru-token", await user.getIdToken());
+    localStorage.setItem("user_id", user.uid);
+
+    window.dispatchEvent(new Event("loginStateChange"));
+
+    toast.success("Google Login Successful");
+    onClose();
+
+  }catch (error) {
+    console.error("Google Sign-In Error:", error);
+    toast.error("Failed to sign in with Google");
+  }
+};
+
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -95,7 +119,7 @@ const handleSubmit = async (e) => {
         <button onClick={onClose}><AiOutlineClose size={24} /></button>
       </div>
       <form className="mt-4 space-y-3" onSubmit={handleSubmit}>
-        <button className="flex bg-[#072533] border p-2 rounded text-white w-full gap-2 items-center">
+        <button onClick={handleGoogleSignIn} className="flex bg-[#072533] border p-2 rounded text-white w-full gap-2 items-center">
           <FcGoogle size={20} /> Log in with Google
         </button>
         
