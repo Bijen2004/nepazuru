@@ -16,6 +16,8 @@ export default function Playground() {
   const [score, setScore] = useState(0);
   const timerInterval = useRef(null);
   const hasHandledCompletion = useRef(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const [bgColor, setBgColor] = useState("#3C5A68");
 
   // Load initial data from localStorage
   useEffect(() => {
@@ -157,13 +159,13 @@ export default function Playground() {
       <div className="fixed top-20 right-4 bg-white/30 rounded-lg px-4 py-2 text-white text-xl font-bold shadow-lg z-50">
         Time: {elapsedTime}s
       </div>
-      <div className="fixed top-32 right-4 bg-white/30 rounded-lg px-4 py-2 text-white text-xl font-bold shadow-lg z-50">
-        Score: {puzzleCompleted ? score : '—'}
-      </div>
+
 
       <div className="max-w-6xl mx-auto flex flex-col items-center relative">
-        <div className="relative">
-          <div className="bg-white/10 rounded-lg shadow-lg p-4">
+        {/* Puzzle & Preview Container */}
+        <div className="flex justify-between items-start gap-5 flex-wrap md:flex-nowrap">
+          <div className="relative">
+          <div className="bg-white/10 rounded-lg shadow-lg p-4" style={{backgroundColor: bgColor}}>
             <h2 className="text-xl text-white font-semibold text-center">
               Solve the Puzzle
             </h2>
@@ -178,15 +180,37 @@ export default function Playground() {
                     onSolved={handlePuzzleComplete}
                   />
                 </div>
-                <ExpandableActionPanel/>
-              </>
-            )}
+                  <div>
+                    <ExpandableActionPanel
+                      showPreview={showPreview}
+                      setShowPreview={setShowPreview}
+                      setBgColor={setBgColor}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
           </div>
+
+          {/* Preview Section */}
+          {showPreview && (
+            <div className="mb-6 max-w-full md:max-w-[300px] lg:max-w-[400px]">
+              <h3 className="text-lg text-white mb-2 text-center">
+                Preview Image
+              </h3>
+              <img
+                src={imageUrl}
+                alt="Preview"
+                className="w-full h-auto max-h-[500px] rounded-lg bg-white/10 border border-gray-700"
+              />
+            </div>
+          )}
         </div>
 
+        {/* Overlay CongratulationBox */}
         {showCongrats && (
           <div className="absolute inset-0 flex justify-center items-center bg-black/60">
-            <CongratulationBox timeElapsed={elapsedTime} score={score} />
+            <CongratulationBox />
           </div>
         )}
       </div>
