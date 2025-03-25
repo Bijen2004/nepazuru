@@ -7,7 +7,6 @@ import Tabs from "@/components/tabs/HistoryTab";
 export default function History() {
   const [activeTab, setActiveTab] = useState("all time");
   const [historyData, setHistoryData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,6 +14,7 @@ export default function History() {
 
   useEffect(() => {
     const userId = localStorage.getItem("user_id");
+    console.log("Fetched user ID:", userId);
 
     if (!userId) {
       console.warn("No user_id found. Redirecting to login.");
@@ -81,16 +81,14 @@ export default function History() {
 
       {/* Tab Navigation */}
       <div className="w-full flex items-center justify-between h-[80px] bg-[#041625] text-white px-4">
-        <p className="text-xl">
-          Showing: {filteredData.length} {activeTab !== "all time" ? `(${activeTab})` : ""}
-        </p>
-        <Tabs activeTab={activeTab} onTabChange={handleTabChange} />
+        <p className="text-xl">Total: {historyData.length}</p>
+        <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
       </div>
 
       {/* Puzzle History Table */}
-      {filteredData.length === 0 ? (
+      {historyData.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-96 text-white">
-          <p className="text-lg">No puzzle history found for {activeTab}.</p>
+          <p className="text-lg">No puzzle history found.</p>
         </div>
       ) : (
         <div className="overflow-x-auto">
