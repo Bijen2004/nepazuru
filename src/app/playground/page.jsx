@@ -18,6 +18,8 @@ export default function Playground() {
   const hasHandledCompletion = useRef(false);
   const [showPreview, setShowPreview] = useState(false);
   const [bgColor, setBgColor] = useState("#3C5A68");
+  const [showPreview, setShowPreview] = useState(false);
+  const [bgColor, setBgColor] = useState("#3C5A68");
 
   // Load initial data from localStorage
   useEffect(() => {
@@ -165,21 +167,23 @@ export default function Playground() {
         {/* Puzzle & Preview Container */}
         <div className="flex justify-between items-start gap-5 flex-wrap md:flex-nowrap">
           <div className="relative">
-          <div className="bg-white/10 rounded-lg shadow-lg p-4" style={{backgroundColor: bgColor}}>
-            <h2 className="text-xl text-white font-semibold text-center">
-              Solve the Puzzle
-            </h2>
-
-            {imageUrl && (
-              <>
-                <div className="w-[500px] h-auto py-[20px] relative">
-                  <JigsawPuzzle
-                    imageSrc={imageUrl}
-                    rows={puzzlePieces}
-                    columns={puzzlePieces}
-                    onSolved={handlePuzzleComplete}
-                  />
-                </div>
+            <div
+              className="bg-white/10 rounded-lg shadow-lg p-4"
+              style={{ backgroundColor: bgColor }}
+            >
+              <h2 className="text-xl text-white font-semibold mb-4 text-center">
+                Solve the Puzzle
+              </h2>
+              {imageUrl && (
+                <>
+                  <div className="w-[500px] h-[500px] aspect-square relative">
+                    <JigsawPuzzle
+                      imageSrc={imageUrl}
+                      rows={puzzlePieces}
+                      columns={puzzlePieces}
+                      onSolved={handlePuzzleComplete}
+                    />
+                  </div>
                   <div>
                     <ExpandableActionPanel
                       showPreview={showPreview}
@@ -192,6 +196,22 @@ export default function Playground() {
             </div>
           </div>
 
+          {/* Preview Section */}
+          {showPreview && (
+            <div className="mb-6 max-w-full md:max-w-[300px] lg:max-w-[400px]">
+              <h3 className="text-lg text-white mb-2 text-center">
+                Preview Image
+              </h3>
+              <img
+                src={imageUrl}
+                alt="Preview"
+                className="w-full h-auto max-h-[500px] rounded-lg bg-white/10 border border-gray-700"
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Overlay CongratulationBox */}
           {/* Preview Section */}
           {showPreview && (
             <div className="mb-6 max-w-full md:max-w-[300px] lg:max-w-[400px]">
