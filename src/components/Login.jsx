@@ -5,7 +5,7 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { signInWithPopup} from "firebase/auth";
+import { getAuth, signInWithPopup, signOut} from "firebase/auth";
 import { auth, googleProvider} from "@/app/firebase"
 
 const Login = ({ onClose, onShowRegister }) => {
@@ -24,6 +24,11 @@ const Login = ({ onClose, onShowRegister }) => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   setLoading(true);
+
+  const firebaseAuth = getAuth();
+  if (firebaseAuth.currentUser) {
+    await signOut(firebaseAuth);
+  }
   try {
     const response = await axios.post("http://localhost:4000/users/login", formData);
     console.log("Success:", response.data);
@@ -48,6 +53,7 @@ const handleSubmit = async (e) => {
 
 const handleGoogleSignIn = async () => {
   try{
+    await signOut(auth);
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
 
