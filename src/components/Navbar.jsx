@@ -43,6 +43,17 @@ const Navbar = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleOpenLogin = () => {
+      setShowLogin(true);
+      setShowRegister(false);
+    };
+  
+    window.addEventListener("openLogin", handleOpenLogin);
+    return () => window.removeEventListener("openLogin", handleOpenLogin);
+  }, []);
+  
+
   const fetchUserById = async (userId) => {
     try {
       const response = await fetch(`http://localhost:4000/users/${userId}`);
@@ -227,7 +238,7 @@ const Navbar = () => {
               <div className="flex-1">
                 {isAuthenticated ? (
                   <>
-                    <p className="font-semibold">User</p>
+                    <p className="font-semibold">{username}</p>
                     <button
                       onClick={handleLogout}
                       className="text-sm text-red-400 hover:text-red-300"
@@ -238,7 +249,6 @@ const Navbar = () => {
                 ) : (
                   <>
                     <p className="font-semibold">Guest</p>
-                    <p className="text-sm text-gray-400">@anonymous123</p>
                   </>
                 )}
               </div>

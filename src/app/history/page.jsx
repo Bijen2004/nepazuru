@@ -8,7 +8,6 @@ export default function History() {
   const [loading, setLoading] = useState(true);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [userId, setUserId] = useState(null);
 
   // Check user login status when component mounts
