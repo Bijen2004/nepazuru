@@ -20,96 +20,49 @@ const Navbar = () => {
   const [showRegister, setShowRegister] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // useEffect(() => {
-  //   // Fetch authentication state (Example: localStorage, API, or Auth provider)
-  //   const user = localStorage.getItem("user"); // Replace with your actual authentication logic
-  //   setIsAuthenticated(!!user);
-  // }, []);
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("nepazuru-token");
-  //   if(token){
-  //     setIsAuthenticated(true)
-  //   }
-  //   // You can also add this to track login state changes
-  //   const handleStorageChange = () => {
-  //     const token = localStorage.getItem("nepazuru-token");
-  //     setIsAuthenticated(!!token);
-  //   };
-
-  //   // Listen for storage changes (in case token is added/removed in another tab)
-  //   window.addEventListener('storage', handleStorageChange);
-
-  //   // Cleanup listener on component unmount
-  //   return () => {
-  //     window.removeEventListener('storage', handleStorageChange);
-  //   };
-  // }, []); // Empty dependency array means this runs once on component mount
-
-  // In Navbar.js
   useEffect(() => {
-    // Check token on mount
-    const token = localStorage.getItem("nepazuru-token");
-    setIsAuthenticated(!!token);
-
-    // Function to update auth state
     const updateAuthState = () => {
-      const token = localStorage.getItem("nepazuru-token");
-      setIsAuthenticated(!!token);
+      setIsAuthenticated(!!localStorage.getItem("nepazuru-token"));
     };
 
-    // Listen for our custom event (same tab changes)
+    updateAuthState();
     window.addEventListener("loginStateChange", updateAuthState);
-
-    // Listen for storage changes (other tab changes)
     window.addEventListener("storage", updateAuthState);
 
-    // Cleanup listeners
     return () => {
       window.removeEventListener("loginStateChange", updateAuthState);
       window.removeEventListener("storage", updateAuthState);
     };
   }, []);
 
-  // Add logout function
   const handleLogout = () => {
     localStorage.removeItem("nepazuru-token");
+    localStorage.removeItem("user_id");
     setIsAuthenticated(false);
-    // Optionally redirect to home or login page
-    // router.push('/home');
+    window.location.reload();
   };
 
+
   const toggleNav = () => {
-    if (!nav) {
-      setClosing(false);
-      setNav(true);
-    } else {
-      closeNav();
-    }
+    setClosing(false);
+    setNav(!nav);
+  };
+
+  const closeNav = () => {
+    setClosing(true);
+    setTimeout(() => setNav(false), 300);
   };
 
   const toggleLogin = (e) => {
-    if (e) e.stopPropagation();
+    e?.stopPropagation();
     setShowLogin((prev) => !prev);
     setShowRegister(false);
-  };
-
-  const closeLogin = () => {
-    setShowLogin(false);
   };
 
   const toggleRegister = (e) => {
     e.stopPropagation();
     setShowRegister((prev) => !prev);
     setShowLogin(false);
-  };
-
-  const closeNav = () => {
-    setClosing(true);
-    setTimeout(() => {
-      setNav(false);
-      setClosing(false);
-    }, 300);
   };
 
   const menuItems = [
@@ -140,16 +93,6 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
-
-      {/* Desktop Avatar */}
-      {/* {isAuthenticated ? 
-      <div>
-        Logged in
-      </div>:
-      <FaUserCircle
-        className="hidden md:block text-3xl cursor-pointer"
-        onClick={toggleLogin}
-      />} */}
 
       {/* Desktop Avatar/Login Section */}
       {isAuthenticated ? (
@@ -182,7 +125,7 @@ const Navbar = () => {
             className="p-6 rounded-lg text-white"
             onClick={(e) => e.stopPropagation()}
           >
-            <Login onClose={closeLogin} onShowRegister={toggleRegister} />
+            <Login onClose={toggleLogin} onShowRegister={toggleRegister} />
           </div>
         </div>
       )}
@@ -272,18 +215,6 @@ const Navbar = () => {
                 )}
               </div>
             </div>
-
-            {/* Sidebar Avatar */}
-            {/* <div
-              className="absolute bottom-4 left-4 flex items-center space-x-3 p-4 rounded-lg bg-gray-800 w-11/12 cursor-pointer"
-              onClick={toggleLogin}
-            >
-              <FaUserCircle className="w-10 h-10 rounded-full border border-gray-600" />
-              <div>
-                <p className="font-semibold">Guest</p>
-                <p className="text-sm text-gray-400">@anonymous123</p>
-              </div>
-            </div> */}
           </div>
         </div>
       )}

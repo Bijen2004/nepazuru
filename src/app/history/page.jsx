@@ -11,32 +11,62 @@ export default function History() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [userId, setUserId] = useState(null);
 
+  // Check user login status when component mounts
   useEffect(() => {
-    const userId = localStorage.getItem("user_id");
-    console.log("Fetched user ID:", userId);
-
-    if (!userId) {
-      console.warn("No user_id found. Redirecting to login.");
+    const storedUserId = localStorage.getItem("user_id");
+    if (storedUserId) {
+      setUserId(storedUserId);
+      setUserLoggedIn(true);
+    } else {
       setUserLoggedIn(false);
       setLoading(false);
-      return;
+      setLoading(false);
     }
+  }, []);
 
-    setUserLoggedIn(true);
-    fetchHistory(userId, currentPage);
-  }, [currentPage]);
+  // Fetch history only when user is logged in & userId exists
+  useEffect(() => {
+    if (userLoggedIn && userId) {
+      fetchHistory(userId, currentPage);
+    }
+  }, [userId, currentPage, userLoggedIn]);
+
+  // Listen for login/logout changes
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedUserId = localStorage.getItem("user_id");
+      if (!storedUserId) {
+        setUserId(null);
+        setUserLoggedIn(false);
+        setHistoryData([]);
+        setLoading(false);
+      } else {
+        setUserId(storedUserId);
+        setUserLoggedIn(true);
+        setLoading(true);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   const fetchHistory = async (userId, page) => {
     setLoading(true);
     try {
+      console.log("Fetching history for user:", userId, "Page:", page);
+
       const response = await axios.get(
         `http://localhost:4000/puzzle/history/${userId}?page=${page}&limit=5`
       );
+
+      console.log("Response data:", response.data);
       setHistoryData(response.data.completions || []);
       setTotalPages(response.data.totalPages || 1);
     } catch (error) {
-      console.error("Error fetching puzzle history:", error);
+      console.error("Error fetching puzzle history:", error.response ? error.response.data : error);
     } finally {
       setLoading(false);
     }
@@ -75,7 +105,7 @@ export default function History() {
       <div className="relative h-48 bg-gradient-to-r from-[#40E0D0]/20 to-[#40E0D0]/10 overflow-hidden">
         <div className="relative container mx-auto px-6 py-12">
           <h1 className="text-white text-4xl font-bold">Puzzle History</h1>
-          <p className="text-[#40E0D0] mt-2 text-xl">({historyData.length})</p>
+          {/* <p className="text-[#40E0D0] mt-2 text-xl">({historyData.length})</p> */}
         </div>
       </div>
 
