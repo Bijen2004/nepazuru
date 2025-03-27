@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NePazuru - A Customizable Puzzle Game
 
-## Getting Started
+## Overview
+NePazuru is an interactive and customizable puzzle game where users can upload images to create their own puzzles, browse default categories, track leaderboard rankings, and view their puzzle history. The game provides a seamless and engaging experience with user authentication and additional customization features.
 
-First, run the development server:
+## Features
+1. **Image Upload & Customization** - Users can upload their own images and customize puzzles.
+2. **Default Categories** - Browse through a selection of default puzzle categories.
+3. **Leaderboard Ranking** - Accessible to logged-in users to view top rankings.
+4. **Puzzle History** - Logged-in users can view their past puzzles.
+5. **User Authentication** - Secure login, signup, and logout functionalities.
+6. **Image Preview** - Users can preview the selected image while playing.
+7. **Puzzle Box Customization** - Modify the background color of the puzzle box.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Setup & Installation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Frontend
+1. Clone the frontend repository:
+   ```sh
+   git clone https://github.com/Bijen2004/nepazuru
+   ```
+2. Navigate into the project folder:
+   ```sh
+   cd nepazuru
+   ```
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Backend
+1. Clone the backend repository:
+   ```sh
+   git clone https://github.com/Bijen2004/nepazuru-backend
+   ```
+2. Navigate into the backend folder:
+   ```sh
+   cd nepazuru-backend
+   ```
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+4. Start the backend server:
+   ```sh
+   npm start
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contribution
+Feel free to contribute to NePazuru by creating pull requests or reporting issues in the respective repositories.
 
-## Learn More
+## License
+This project is open-source and available under the MIT License.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
