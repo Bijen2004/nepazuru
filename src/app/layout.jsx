@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Navbar />
-        <main>{children}</main>
+        <main >{children}</main>
         <Footer/>
         
         <Toaster richColors position="top-right" />

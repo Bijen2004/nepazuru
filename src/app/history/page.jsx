@@ -109,14 +109,9 @@ export default function History() {
                   className="bg-gray-300 even:bg-gray-200 hover:bg-gray-400 transition"
                 >
                   <td className="py-4 px-6 flex items-center gap-10">
-                    <div className="w-7 h-7 rounded-full flex items-center bg-[#2E3A44] text-white justify-center font-bold border border-gray-700 shadow-md">
-                      {index + 1}
+                    <div className="w-[100px] h-7 rounded-full flex items-center bg-[#2E3A44] text-white justify-center font-bold border border-gray-700 shadow-md">
+                      Game {index + 1}
                     </div>
-                    <img
-                      src={game.selectedImage || "/Logo.png"}
-                      alt="puzzle"
-                      className="w-10 h-10 object-cover rounded-md"
-                    />
                   </td>
                   <td className="py-4 px-6 text-center text-black">
                     {game.puzzlePiece}
