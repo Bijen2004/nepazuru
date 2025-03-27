@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Tabs from "@/components/tabs/HistoryTab";
 
 export default function History() {
   const [activeTab, setActiveTab] = useState("all time");
@@ -66,7 +65,10 @@ export default function History() {
       setHistoryData(response.data.completions || []);
       setTotalPages(response.data.totalPages || 1);
     } catch (error) {
-      console.error("Error fetching puzzle history:", error.response ? error.response.data : error);
+      console.error(
+        "Error fetching puzzle history:",
+        error.response ? error.response.data : error
+      );
     } finally {
       setLoading(false);
     }
@@ -103,16 +105,23 @@ export default function History() {
     <div className="bg-[#0a192f] min-w-screen h-screen">
       {/* Header Section */}
       <div className="relative h-48 bg-gradient-to-r from-[#40E0D0]/20 to-[#40E0D0]/10 overflow-hidden">
-        <div className="relative container mx-auto px-6 py-12">
+        <div className="absolute inset-0">
+          <img
+            src="/puzzle-gallery-bg.png"
+            alt="Leaderboard background"
+            className="w-full h-full object-cover opacity-90"
+          />
+          <div className="absolute inset-0 bg-black/40"></div>
+        </div>
+        <div className="relative z-10 container mx-auto px-6 py-12">
           <h1 className="text-white text-4xl font-bold">Puzzle History</h1>
-          {/* <p className="text-[#40E0D0] mt-2 text-xl">({historyData.length})</p> */}
+          <p className="text-[#40E0D0] mt-2 text-xl">({historyData.length})</p>
         </div>
       </div>
 
       {/* Tab Navigation */}
-      <div className="w-full flex items-center justify-between h-[80px] bg-[#041625] text-white px-4">
+      <div className="w-full flex items-center justify-start h-[80px] bg-[#041625] text-white px-4">
         <p className="text-xl">Total: {historyData.length}</p>
-        <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
       </div>
 
       {/* Puzzle History Table */}
