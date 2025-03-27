@@ -57,16 +57,15 @@ export default function History() {
       console.log("Fetching history for user:", userId, "Page:", page);
 
       const response = await axios.get(
-        `http://localhost:4000/puzzle/history/${userId}?page=${page}&limit=5`
+        `http://localhost:4000/puzzle/history/${userId}`
       );
 
       console.log("Response data:", response.data);
       setHistoryData(response.data.completions || []);
-      setTotalPages(response.data.totalPages || 1);
     } catch (error) {
       console.error(
         "Error fetching puzzle history:",
-        error.response ? error.response.data : error
+        error.response?.data || error
       );
     } finally {
       setLoading(false);
@@ -118,7 +117,6 @@ export default function History() {
         </div>
       </div>
 
-      {/* Tab Navigation */}
       <div className="w-full flex items-center justify-start h-[80px] bg-[#041625] text-white px-4">
         <p className="text-xl">Total: {historyData.length}</p>
       </div>
@@ -130,7 +128,7 @@ export default function History() {
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+          <table className="w-full table-fixed border-collapse">
             <thead>
               <tr className="bg-[#001a25] text-white">
                 <th className="py-4 px-6 text-left w-1/5">Puzzle</th>
@@ -140,21 +138,16 @@ export default function History() {
                 <th className="py-4 px-6 text-center w-1/5">Date</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="overflow-y-auto max-h-96">
               {historyData.map((game, index) => (
                 <tr
                   key={index}
                   className="bg-gray-300 even:bg-gray-200 hover:bg-gray-400 transition"
                 >
-                  <td className="py-4 px-6 flex items-center gap-10">
-                    <div className="w-7 h-7 rounded-full flex items-center bg-[#2E3A44] text-white justify-center font-bold border border-gray-700 shadow-md">
-                      {index + 1}
+                  <td className="py-4 px-4 flex items-center justify-center gap-10">
+                    <div className="w-fit h-7 p-2 rounded-full flex items-center bg-[#2E3A44] text-white justify-center font-bold border border-gray-700 shadow-md">
+                      Game {index + 1}
                     </div>
-                    <img
-                      src={game.selectedImage || "/Logo.png"}
-                      alt="puzzle"
-                      className="w-10 h-10 object-cover rounded-md"
-                    />
                   </td>
                   <td className="py-4 px-6 text-center text-black">
                     {game.puzzlePiece}
@@ -172,39 +165,6 @@ export default function History() {
               ))}
             </tbody>
           </table>
-        </div>
-      )}
-
-      {/* Pagination Controls */}
-      {totalPages > 1 && (
-        <div className="flex justify-center mt-4">
-          <button
-            className={`px-4 py-2 mx-2 rounded-lg ${
-              currentPage === 1
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-[#40E0D0] hover:bg-[#30c4b2]"
-            }`}
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </button>
-          <span className="text-white px-4">
-            Page {currentPage} of {totalPages}
-          </span>
-          <button
-            className={`px-4 py-2 mx-2 rounded-lg ${
-              currentPage === totalPages
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-[#40E0D0] hover:bg-[#30c4b2]"
-            }`}
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
         </div>
       )}
     </div>

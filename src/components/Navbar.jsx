@@ -19,10 +19,18 @@ const Navbar = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showAvatar, setShowAvatar] = useState(false);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const updateAuthState = () => {
-      setIsAuthenticated(!!localStorage.getItem("nepazuru-token"));
+      const token = localStorage.getItem("nepazuru-token");
+      setIsAuthenticated(!!token);
+
+      if (token) {
+        const userId = localStorage.getItem("user_id");
+        fetchUserById(userId);
+      }
     };
 
     updateAuthState();
@@ -35,13 +43,25 @@ const Navbar = () => {
     };
   }, []);
 
+  const fetchUserById = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:4000/users/${userId}`);
+      const data = await response.json();
+      if (data.username) {
+        setUsername(data.username);
+      }
+    } catch (error) {
+      console.error("Error fetching user data", error);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("nepazuru-token");
     localStorage.removeItem("user_id");
     setIsAuthenticated(false);
+    setUsername("");
     window.location.reload();
   };
-
 
   const toggleNav = () => {
     setClosing(false);
@@ -96,17 +116,25 @@ const Navbar = () => {
 
       {/* Desktop Avatar/Login Section */}
       {isAuthenticated ? (
-        <div className="flex items-center gap-2">
-          <FaUserCircle className="hidden md:block text-3xl" />
+        <div className="flex items-center gap-2 relative">
+          <FaUserCircle
+            className="hidden md:block text-3xl cursor-pointer"
+            onClick={() => setShowAvatar(!showAvatar)} // Toggle Avatar visibility
+          />
           <div className="hidden md:flex flex-col">
-            <p className="text-sm font-medium">User</p>
-            <button
-              onClick={handleLogout}
-              className="text-xs text-red-400 hover:text-red-300"
-            >
-              Logout
-            </button>
+            <p className="text-sm font-medium">{username}</p>
           </div>
+          {showAvatar && (
+            <div className="bg-[#041625] border-[#3C5A68] border-2 border-dashed p-6 rounded-lg shadow-lg text-white min-w-30 w-fit absolute right-5 top-16 z-50">
+              <p className="text-xl font-guerrilla text-yellow-500 font-bold">{username}</p>
+              <button
+                onClick={handleLogout}
+                className="w-full text-red-500 hover:bg-gray-100 mt-2 py-1 text-sm rounded-lg"
+              >
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       ) : (
         <FaUserCircle
