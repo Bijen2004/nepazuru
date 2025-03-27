@@ -145,7 +145,7 @@ export default function History() {
                   className="bg-gray-300 even:bg-gray-200 hover:bg-gray-400 transition"
                 >
                   <td className="py-4 px-4 flex items-center justify-center gap-10">
-                    <div className="w-fit h-7 p-2 rounded-full flex items-center bg-[#2E3A44] text-white justify-center font-bold border border-gray-700 shadow-md">
+                    <div className="w-30 h-7 p-2 rounded-full flex items-center bg-[#2E3A44] text-white justify-center font-bold border border-gray-700 shadow-md text-sm md:text-base">
                       Game {index + 1}
                     </div>
                   </td>
