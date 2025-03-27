@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function History() {
-  const [activeTab, setActiveTab] = useState("all time");
   const [historyData, setHistoryData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
