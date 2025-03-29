@@ -12,7 +12,7 @@ import {
   setPersistence,
   browserLocalPersistence,
 } from "firebase/auth";
-import { auth, googleProvider } from "@/app/firebase";
+import { googleProvider } from "@/app/firebase";
 
 const Login = ({ onClose, onShowRegister }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });

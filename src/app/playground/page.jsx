@@ -208,21 +208,6 @@ export default function Playground() {
             </div>
           )}
         </div>
-
-        {/* Overlay CongratulationBox */}
-          {/* Preview Section */}
-          {showPreview && (
-            <div className="mb-6 max-w-full md:max-w-[300px] lg:max-w-[400px]">
-              <h3 className="text-lg text-white mb-2 text-center">
-                Preview Image
-              </h3>
-              <img
-                src={imageUrl}
-                alt="Preview"
-                className="w-full h-auto max-h-[500px] rounded-lg bg-white/10 border border-gray-700"
-              />
-            </div>
-          )}
         </div>
 
         {/* Overlay CongratulationBox */}

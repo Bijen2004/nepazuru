@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { toast } from "sonner";
 
 const Register = ({ onClose, onShowLogin }) => {
   const [formData, setFormData] = useState({
@@ -22,13 +23,17 @@ const Register = ({ onClose, onShowLogin }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:4000/users/register", formData);
+      const response = await axios.post(
+        "http://localhost:4000/users/register",
+        formData
+      );
       console.log("Success:", response.data);
-      alert("Registration successful!");
+      toast.success("Registration successful!");
+      // alert("Registration successful!");
       onClose();
     } catch (error) {
-      console.error("Error:", error.response?.data || error.message);
-      // alert("Registration failed. Please try again.");
+      // console.error("Error:", error.response?.data || error.message);
+      // toast.error("Registration failed. Please check your credentials.");
     }
     setLoading(false);
   };
@@ -37,7 +42,9 @@ const Register = ({ onClose, onShowLogin }) => {
     <div className="fixed top-20 right-10 w-96 p-6 bg-[#041625] text-white rounded-lg border-2 border-dashed border-[#3C5A68] shadow-lg z-50">
       <div className="flex justify-between items-center">
         <h2 className="text-xl text-yellow-500 font-bold">Create an Account</h2>
-        <button onClick={onClose}><AiOutlineClose size={24} /></button>
+        <button onClick={onClose}>
+          <AiOutlineClose size={24} />
+        </button>
       </div>
       <form className="mt-4 space-y-3" onSubmit={handleSubmit}>
         <div>
@@ -77,17 +84,32 @@ const Register = ({ onClose, onShowLogin }) => {
             placeholder="Password"
             required
           />
-          <button type="button" className="absolute right-3 top-[38px] text-gray-500" onClick={togglePassword}>
-            {showPassword ? <IoEyeOffOutline size={20} /> : <IoEyeOutline size={20} />}
+          <button
+            type="button"
+            className="absolute right-3 top-[38px] text-gray-500"
+            onClick={togglePassword}
+          >
+            {showPassword ? (
+              <IoEyeOffOutline size={20} />
+            ) : (
+              <IoEyeOutline size={20} />
+            )}
           </button>
         </div>
 
-        <button type="submit" className="w-full mt-4 p-2 bg-green-500 text-white rounded" disabled={loading}>
+        <button
+          type="submit"
+          className="w-full mt-4 p-2 bg-green-500 text-white rounded"
+          disabled={loading}
+        >
           {loading ? "Signing Up..." : "Sign Up"}
         </button>
       </form>
       <p className="mt-3 text-center text-sm">
-        Already have an account? <a href="#" className="text-blue-500" onClick={onShowLogin}>Log in</a>
+        Already have an account?{" "}
+        <a href="#" className="text-blue-500" onClick={onShowLogin}>
+          Log in
+        </a>
       </p>
     </div>
   );
